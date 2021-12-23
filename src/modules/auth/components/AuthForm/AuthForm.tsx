@@ -1,37 +1,34 @@
 import { Alert, Grid } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { Form, PasswordField, TextField } from 'shared/components'
-import { LoginFormFields, useFormProps } from './LoginForm.utils'
+import { paths } from 'config'
+import { Form, PasswordField, TextField, ErrorAlert } from 'shared/components'
+import { AuthFormFields, useFormProps } from './AuthForm.utils'
 
-interface LoginFormProps {}
+interface LoginFormProps {
+  path: string
+  submitText: string
+}
 
-const LoginForm = (props: LoginFormProps) => {
-  const { formProps, error } = useFormProps()
+const LoginForm = ({ path, submitText, ...props }: LoginFormProps) => {
+  const isLoginForm = path === paths.login
+  const { formProps, error } = useFormProps(isLoginForm)
   const { isSubmitting } = formProps.formState
   return (
     <Form {...formProps} {...props}>
       <Grid container spacing={3}>
-        {error && (
-          <Grid item xs={12}>
-            <Alert severity="error">xd</Alert>
-          </Grid>
-        )}
+        <Grid container justifyContent="center">
+          {error && <ErrorAlert>{error}</ErrorAlert>}
+        </Grid>
         <Grid item xs={12}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <TextField
-                required
-                name={LoginFormFields.Username}
-                // label={t('login.username')}
-                autoComplete="username"
-              />
+              <TextField required name={AuthFormFields.Name} label="username" />
             </Grid>
             <Grid item xs={12}>
               <PasswordField
                 required
-                name={LoginFormFields.Password}
-                // label={t('login.password')}
-                autoComplete="current-password"
+                name={AuthFormFields.Password}
+                label="password"
               />
             </Grid>
           </Grid>
@@ -44,7 +41,7 @@ const LoginForm = (props: LoginFormProps) => {
               color="primary"
               loading={isSubmitting}
             >
-              xd
+              {submitText}
             </LoadingButton>
           </Grid>
         </Grid>

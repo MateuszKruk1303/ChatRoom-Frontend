@@ -15,7 +15,7 @@ const Layout = ({ routes }: LayoutProps) => {
         {routes.map((route, i) => (
           <PrivateRoute key={`route-${i}`} {...route} />
         ))}
-        <Route component={() => <Redirect to={paths.signIn} />} />
+        <Route component={() => <Redirect to={paths.login} />} />
       </Switch>
     </Container>
   )

@@ -1,6 +1,6 @@
 const paths = <const>{
   home: '/',
-  signIn: '/sign-in',
+  login: '/login',
   register: '/register',
 }
 

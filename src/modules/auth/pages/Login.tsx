@@ -1,14 +1,15 @@
 import { paths } from 'config'
 import { Redirect } from 'react-router'
-import { LoginForm, FormPage } from '../components'
+import { AuthForm, FormPage } from '../components'
 import Axios from 'axios'
+import { useAuth } from 'shared/hooks'
 
 const Login = () => {
-  const isAuthenticated = false
+  const { isAuthenticated } = useAuth()
   if (isAuthenticated) return <Redirect to={paths.home} />
   return (
-    <FormPage title="login" route={paths.register} linkText="registerLinkText">
-      <LoginForm />
+    <FormPage title="Login" route={paths.register} linkText="Create account">
+      <AuthForm path={paths.login} submitText="Login" />
     </FormPage>
   )
 }

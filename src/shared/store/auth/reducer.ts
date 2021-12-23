@@ -1,49 +1,41 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { Resource, User } from 'shared/types'
-import { initResource, setPending, setSucceeded, setFailed } from 'shared/utils'
-import { signIn, signOut, getCurrentUser } from './actions'
+import { initResource, setFailed, setPending, setSucceeded } from 'shared/utils'
+import { register, login } from './actions'
+import Auth from 'shared/services/Auth'
 
 interface State {
-  signIn: Resource
-  signUp: Resource
-  currentUser: Resource<User>
+  login: Resource<User>
+  register: Resource
 }
 
 const initialState: State = {
-  signIn: initResource(),
-  signUp: initResource(),
-  currentUser: initResource(),
+  login: initResource(),
+  register: initResource(),
 }
 
-const reducer = createReducer(initialState, builder =>
+export default createReducer(initialState, builder =>
   builder
-    .addCase(signIn.pending, state => {
-      setPending(state.signIn)
+    .addCase(login.pending, state => {
+      setPending(state.login)
     })
-    .addCase(signIn.fulfilled, state => {
-      setSucceeded(state.signIn)
+    .addCase(
+      login.fulfilled,
+      (state, { payload: { accessToken, name, id } }) => {
+        Auth.setTokensInfo({ accessToken })
+        setSucceeded(state.login, { name, id })
+      }
+    )
+    .addCase(login.rejected, (state, { payload }) => {
+      setFailed(state.login, payload)
     })
-    .addCase(signIn.rejected, state => {
-      setFailed(state.signIn)
+    .addCase(register.pending, state => {
+      setPending(state.register)
     })
-    .addCase(signOut.pending, state => {
-      setPending(state.signUp)
+    .addCase(register.fulfilled, state => {
+      setSucceeded(state.register)
     })
-    .addCase(signOut.fulfilled, state => {
-      setSucceeded(state.signUp)
-    })
-    .addCase(signOut.rejected, state => {
-      setFailed(state.signUp)
-    })
-    .addCase(getCurrentUser.pending, state => {
-      setPending(state.currentUser)
-    })
-    .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
-      setSucceeded(state.currentUser, payload)
-    })
-    .addCase(getCurrentUser.rejected, state => {
-      setFailed(state.currentUser)
+    .addCase(register.rejected, (state, { payload }) => {
+      setFailed(state.register, payload)
     })
 )
-
-export default reducer

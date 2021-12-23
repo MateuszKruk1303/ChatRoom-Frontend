@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios'
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Auth from '../Auth'
 
 export const authenticate = async (config: AxiosRequestConfig) => {
@@ -8,4 +8,12 @@ export const authenticate = async (config: AxiosRequestConfig) => {
     config.headers.Authorization = `Bearer ${token}`
   }
   return config
+}
+
+export const handleResponse = async (response: AxiosResponse) => {
+  return Promise.resolve(response)
+}
+
+export const handleError = async (error: AxiosError) => {
+  return Promise.reject(JSON.parse(error.request.response).message)
 }

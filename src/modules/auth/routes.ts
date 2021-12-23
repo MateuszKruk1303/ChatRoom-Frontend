@@ -4,7 +4,7 @@ import { ModuleRoute } from 'shared/types'
 
 const routes: ModuleRoute[] = [
   {
-    path: paths.signIn,
+    path: paths.login,
     exact: true,
     public: true,
     component: Loadable({

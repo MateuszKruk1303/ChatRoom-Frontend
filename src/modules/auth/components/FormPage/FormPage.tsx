@@ -1,6 +1,6 @@
-import { Grid, Card, CardContent } from '@mui/material'
+import { Grid, CardContent } from '@mui/material'
 import { PropsWithChildren } from 'react'
-import { Title, Link } from './FormPage.style'
+import { Title, Link, Card } from './FormPage.style'
 
 interface FormPageProps {
   route: string

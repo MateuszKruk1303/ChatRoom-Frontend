@@ -3,28 +3,40 @@ import { AxiosResponse } from 'axios'
 import Api, { paths } from 'shared/services/Api'
 import { Auth } from 'shared/services'
 import { User } from 'shared/types'
+import { RegisterPayload, LoginPayload, LoginResponse } from './actions.types'
 
 const NAMESPACE = 'auth'
 
-export const signIn = createAsyncThunk<
-  void,
-  { username: string; password: string }
->(`${NAMESPACE}/signIn`, async authData => {
-  // const {
-  //   data: { accessToken },
-  // } = await Api.post<any, AxiosResponse<{ accessToken: string }>>(
-  //   paths.Auth.signIn,
-  //   authData
-  // )
-  // Auth.setTokensInfo({ accessToken: accessToken })
-})
+export const register = createAsyncThunk<void, RegisterPayload>(
+  `${NAMESPACE}/register`,
+  async (data, thunkApi) => {
+    try {
+      const response = await Api.post<any, AxiosResponse>(
+        paths.Auth.register,
+        data
+      )
 
-export const getCurrentUser = createAsyncThunk<any>(
-  `${NAMESPACE}/getCurrentUsers`,
-  async () => {
-    // const response: AxiosResponse<User> = await Api.get(paths.Users.currentUser)
-    // return response.data
+      return response.data
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err)
+    }
   }
 )
+
+export const login = createAsyncThunk<
+  LoginResponse,
+  LoginPayload,
+  { rejectValue: string }
+>(`${NAMESPACE}/login`, async (data, thunkApi) => {
+  try {
+    const response = await Api.post<LoginResponse, AxiosResponse>(
+      paths.Auth.login,
+      data
+    )
+    return response.data
+  } catch (err: any) {
+    return thunkApi.rejectWithValue(err)
+  }
+})
 
 export const signOut = createAsyncThunk(`${NAMESPACE}/signOut`, () => {})

@@ -18,3 +18,5 @@ export * from './TextField'
 
 export { default as DateField } from './DateField'
 export * from './DateField'
+
+export { default as ErrorAlert } from './ErrorAlert'
