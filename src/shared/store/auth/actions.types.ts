@@ -1,11 +1,15 @@
-export interface RegisterPayload {
+export interface User {
+  id: number
   name: string
   password: string
 }
 
-export type LoginPayload = RegisterPayload
+export type RegisterPayload = Omit<User, 'id'>
 
-export interface LoginResponse extends Pick<RegisterPayload, 'name'> {
+export type LoginPayload = Omit<User, 'id'>
+
+export interface LoginResponse extends Omit<User, 'password'> {
   accessToken: string
-  id: string
 }
+
+export type CurrentUserResponse = Pick<User, 'id' | 'name'>

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { Resource, User } from 'shared/types'
 import { initResource, setFailed, setPending, setSucceeded } from 'shared/utils'
-import { register, login } from './actions'
+import { register, login, logout, getCurrentUser } from './actions'
 import Auth from 'shared/services/Auth'
 
 interface State {
@@ -37,5 +37,17 @@ export default createReducer(initialState, builder =>
     })
     .addCase(register.rejected, (state, { payload }) => {
       setFailed(state.register, payload)
+    })
+    .addCase(getCurrentUser.pending, state => {
+      setPending(state.login)
+    })
+    .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
+      setSucceeded(state.login, { ...payload })
+    })
+    .addCase(getCurrentUser.rejected, (state, { payload }) => {
+      setFailed(state.login, payload)
+    })
+    .addCase(logout, state => {
+      Auth.removeTokens()
     })
 )

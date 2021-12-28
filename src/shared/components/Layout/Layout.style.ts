@@ -3,7 +3,8 @@ import { styled } from '@mui/material'
 
 export const Container = styled('div')(({ theme }) => ({
   display: 'flex',
-  minHeight: '100vh',
+  minHeight: '90vh',
+  margin: theme.spacing(9, 2, 0),
   padding: theme.spacing(3),
 }))
 

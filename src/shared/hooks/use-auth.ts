@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Auth } from 'shared/services'
 import * as actions from 'shared/store/auth/actions'
+import root from 'shared/store/root'
 import { getLoginState, getRegisterState } from 'shared/store/auth/selectors'
 import { LoadingStatus } from 'shared/types'
 
@@ -20,6 +21,8 @@ export const useAuth = () => {
 
   const isLoading = isLoginLoading || isRegisterLoading
 
+  const getCurrentUser = async () => dispatch(actions.getCurrentUser())
+
   const login = async (name: string, password: string) => {
     dispatch(actions.login({ name, password }))
   }
@@ -28,16 +31,20 @@ export const useAuth = () => {
     dispatch(actions.register({ name, password }))
   }
 
-  const signOut = () => {}
+  const logout = () => {
+    dispatch(actions.logout())
+    dispatch(root.actions.clearState())
+  }
 
   const isAuthenticated = !!Auth.getTokensInfo().accessToken
 
   return {
     isAuthenticated,
+    getCurrentUser,
     error,
     login,
     register,
-    signOut,
+    logout,
     isLoading,
     loginError,
     registerError,
