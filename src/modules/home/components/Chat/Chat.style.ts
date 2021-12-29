@@ -1,6 +1,9 @@
-import { Card, Grid, styled } from '@mui/material'
+import { Card, styled } from '@mui/material'
 
-export const Wrapper = styled(Card)(({ theme }) => ({
-  minWidth: 1200,
-  maxWidth: 1400,
-}))
+const WRAPPER_HEIGHT = 800
+const WRAPPER_WIDTH = 1200
+
+export const Wrapper = styled(Card)({
+  minWidth: WRAPPER_WIDTH,
+  maxHeight: WRAPPER_HEIGHT,
+})

@@ -1,16 +1,16 @@
 import { Button, Grid, Typography } from '@mui/material'
 import { PageLoader } from 'shared/components'
 import { User } from 'shared/types'
+import { ActiveUser } from '../../../types'
 import { Wrapper, UserContainer } from './UsersList.style'
-import { useSelector } from 'react-redux'
-import { selectors } from 'modules/home/store'
 import Status from './Status'
 
-interface ActiveUsersProps {
+interface UsersListProps {
   users: User[]
   userId: number
   isLoading: boolean
   setReceiver: (id: number | null) => void
+  activeUsers: ActiveUser[]
 }
 
 const UsersList = ({
@@ -18,9 +18,8 @@ const UsersList = ({
   users,
   setReceiver,
   isLoading,
-}: ActiveUsersProps) => {
-  const activeUsers = useSelector(selectors.getActiveUsers)
-
+  activeUsers,
+}: UsersListProps) => {
   return (
     <Wrapper>
       <Grid container justifyContent="center">

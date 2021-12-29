@@ -1,5 +1,4 @@
 import { useSnackbar as baseUseSnackbar, OptionsObject } from 'notistack'
-import strings from 'locales'
 
 export const useErrorSnackbar = () => {
   const { enqueueSnackbar } = baseUseSnackbar()
@@ -9,7 +8,7 @@ export const useErrorSnackbar = () => {
     autoHideDuration: 3000,
   }
 
-  const defaultMessage = strings.ERROR_MESSAGE
+  const defaultMessage = 'Something went wrong'
   const showSnackbar = (message?: string) =>
     enqueueSnackbar(message || defaultMessage, options)
 

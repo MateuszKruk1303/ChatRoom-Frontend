@@ -10,6 +10,7 @@ const PrivateRoute = ({ public: isPublic, ...props }: ModuleRoute) => {
 
   useEffect(() => {
     if (!isPublic) getCurrentUser()
+    // eslint-disable-next-line
   }, [])
 
   if (isLoading) {

@@ -1,4 +1,4 @@
-import Chat from '../components/Chat'
+import { Chat } from '../components'
 import { Wrapper } from './Home.style'
 
 const Home = () => {

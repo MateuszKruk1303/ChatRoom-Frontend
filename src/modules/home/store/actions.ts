@@ -1,6 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit'
 import Api, { paths } from 'shared/services/Api'
 import { MODULE_NAME } from '../strings'
+import { ActiveUser } from '../types'
 import {
   GetAllMessagesPaylaod,
   ReceiveMessage,
@@ -37,7 +38,7 @@ export const receiveMessage = createAction<ReceiveMessage>(
   `${MODULE_NAME}/receiveMessage`
 )
 
-export const userConnected = createAction<{ userId: number; socketId: string }>(
+export const userConnected = createAction<ActiveUser>(
   `${MODULE_NAME}/userConnected`
 )
 
@@ -46,5 +47,5 @@ export const userDisconnected = createAction<{ id: string }>(
 )
 
 export const getListOfActiveUsers = createAction<{
-  users: { socketId: string; userId: number }[]
+  users: ActiveUser[]
 }>(`${MODULE_NAME}/getListOfActiveUsers`)

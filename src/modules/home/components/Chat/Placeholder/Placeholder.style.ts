@@ -1,5 +1,7 @@
 import { styled } from '@mui/material'
 
-export const Wrapper = styled('div')(({ theme }) => ({
-  height: 630,
-}))
+const WRAPPER_HEIGHT = 740
+
+export const Wrapper = styled('div')({
+  height: WRAPPER_HEIGHT,
+})

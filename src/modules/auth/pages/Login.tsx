@@ -1,7 +1,6 @@
 import { paths } from 'config'
 import { Redirect } from 'react-router'
 import { AuthForm, FormPage } from '../components'
-import Axios from 'axios'
 import { useAuth } from 'shared/hooks'
 
 const Login = () => {

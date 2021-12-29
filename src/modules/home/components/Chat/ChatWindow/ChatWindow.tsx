@@ -1,19 +1,19 @@
-import { Box, Button, TextField } from '@mui/material'
-import { selectors } from 'modules/home/store'
+import { Button, TextField } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { PageLoader } from 'shared/components'
-import { socket } from '../../../socket'
-import { Message as MessageType } from '../../../types'
-import { MessagesWrapper, TextAreaWrapper } from './ChatWindow.style'
+import { socket, messages as socketMessages } from '../../../socket'
+import { ActiveUser, Message as MessageType } from '../../../types'
 import Message from './Message'
+import { MessagesWrapper, TextAreaWrapper, Wrapper } from './ChatWindow.style'
 
+const ENTER_KEY_CODE = 'Enter'
 interface ChatWindowProps {
   getUserNameById: (id: number) => string | undefined
   receiver: number | null
   messages: MessageType[]
   userId: number
   isLoading: boolean
+  activeUsers: ActiveUser[]
 }
 
 const ChatWindow = ({
@@ -22,32 +22,34 @@ const ChatWindow = ({
   messages,
   userId,
   isLoading,
+  activeUsers,
 }: ChatWindowProps) => {
-  const [message, setMessage] = useState('')
   const endRef = useRef<HTMLDivElement | null>(null)
-  const activeUsers = useSelector(selectors.getActiveUsers)
+
+  const [message, setMessage] = useState('')
 
   const handleSendMessage = () => {
     const yourSocketId = activeUsers.find(
       item => item.userId === userId
     )!.socketId
+
     const receiverSocketId = activeUsers.find(
       item => item.userId === receiver
-    )!.socketId
+    )?.socketId
 
     if (socket && message)
-      socket.emit('message', {
+      socket.emit(socketMessages.message, {
         fromId: userId,
         toId: receiver,
         text: message,
-        toSocketId: receiverSocketId,
+        toSocketId: receiverSocketId || undefined,
         fromSocketId: yourSocketId,
       })
     setMessage('')
   }
 
   const onEnterKey = (e: any) => {
-    if (e.code === 'Enter') {
+    if (e.code === ENTER_KEY_CODE) {
       handleSendMessage()
       e.preventDefault()
     }
@@ -62,7 +64,7 @@ const ChatWindow = ({
   }, [receiver, messages])
 
   return (
-    <Box>
+    <Wrapper>
       <MessagesWrapper>
         {isLoading ? (
           <PageLoader />
@@ -97,7 +99,7 @@ const ChatWindow = ({
           Send
         </Button>
       </TextAreaWrapper>
-    </Box>
+    </Wrapper>
   )
 }
 

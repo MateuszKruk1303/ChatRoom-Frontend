@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material'
-import { MessageContainer, Wrapper } from './Message.style'
 import { theme } from 'config'
+import { MessageContainer, Wrapper } from './Message.style'
 
 interface MessageProps {
   from: string | undefined
@@ -20,7 +20,7 @@ const Message = ({ from, text, isYours }: MessageProps) => {
           <Grid item alignSelf={isYours ? 'flex-end' : 'flex-start'}>
             <Typography>{from}</Typography>
           </Grid>
-          <Grid item>
+          <Grid item alignSelf={isYours ? 'flex-end' : 'flex-start'}>
             <MessageContainer theme={theme} isYours={isYours}>
               <Typography>{text}</Typography>
             </MessageContainer>

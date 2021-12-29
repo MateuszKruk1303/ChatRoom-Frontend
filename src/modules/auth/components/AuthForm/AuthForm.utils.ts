@@ -3,8 +3,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { object, string, SchemaOf } from 'yup'
 import { FormProps } from 'shared/components'
 import { useAuth } from 'shared/hooks'
-import { paths } from 'config'
-import { useEffect } from 'react'
 
 export enum AuthFormFields {
   Name = 'name',

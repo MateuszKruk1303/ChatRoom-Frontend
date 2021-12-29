@@ -14,6 +14,8 @@ export const MessageContainer = styled('div')(
     borderRadius: 20,
     padding: theme.spacing(1, 2),
     color: theme.palette.common.white,
+    width: 'max-content',
+    marginTop: theme.spacing(0.5),
   })
 )
 

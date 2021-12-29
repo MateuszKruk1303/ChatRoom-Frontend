@@ -7,7 +7,7 @@ import Placeholder from './Placeholder'
 
 interface ChatProps {}
 
-const Chat = ({}: ChatProps) => {
+const Chat = (props: ChatProps) => {
   const {
     id,
     getUserNameById,
@@ -17,6 +17,7 @@ const Chat = ({}: ChatProps) => {
     messages,
     areMessagesLoading,
     areUsersLoading,
+    activeUsers,
   } = useChat()
 
   return (
@@ -30,6 +31,7 @@ const Chat = ({}: ChatProps) => {
               messages={messages}
               userId={id}
               isLoading={areMessagesLoading}
+              activeUsers={activeUsers}
             />
           ) : (
             <Placeholder />
@@ -41,6 +43,7 @@ const Chat = ({}: ChatProps) => {
             userId={id}
             users={users}
             setReceiver={setReceiver}
+            activeUsers={activeUsers}
           />
         </Grid>
       </Grid>

@@ -3,7 +3,7 @@ import { useAuth } from 'shared/hooks'
 import { AppBar, LogoutButton } from './TopBar.style'
 
 interface TopBarProps {}
-const TopBar = ({}: TopBarProps) => {
+const TopBar = (props: TopBarProps) => {
   const { logout, isAuthenticated } = useAuth()
   return (
     <AppBar position="absolute">

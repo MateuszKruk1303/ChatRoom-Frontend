@@ -4,3 +4,8 @@ export interface Message {
   toId: number
   text: string
 }
+
+export interface ActiveUser {
+  socketId: string
+  userId: number
+}

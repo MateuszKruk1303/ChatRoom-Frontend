@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import socketio, { Socket } from 'socket.io-client'
 import { actions } from '../store'
-import { Message } from '../types'
+import { ActiveUser, Message } from '../types'
 import { messages } from './messages'
 
 export * from './messages'
@@ -26,23 +26,18 @@ export const connectChatServer = (
     dispatch(actions.receiveMessage(response))
   })
 
-  socket.on(
-    messages.userConnected,
-    (response: { userId: number; socketId: string }) => {
-      dispatch(actions.userConnected(response))
-      dispatch(actions.getAllUsers())
-    }
-  )
+  socket.on(messages.userConnected, (response: ActiveUser) => {
+    dispatch(actions.userConnected(response))
+    dispatch(actions.getAllUsers())
+  })
+
   socket.on(messages.userDisconnected, (response: { id: string }) => {
     dispatch(actions.userDisconnected(response))
   })
 
-  socket.on(
-    messages.activeUsers,
-    (response: { users: { socketId: string; userId: number }[] }) => {
-      dispatch(actions.getListOfActiveUsers(response))
-    }
-  )
+  socket.on(messages.activeUsers, (response: { users: ActiveUser[] }) => {
+    dispatch(actions.getListOfActiveUsers(response))
+  })
 }
 
 export const disconnect = () => socket?.disconnect()

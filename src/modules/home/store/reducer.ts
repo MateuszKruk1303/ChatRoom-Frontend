@@ -9,12 +9,12 @@ import {
   userDisconnected,
   getListOfActiveUsers,
 } from './actions'
-import { Message } from '../types'
+import { ActiveUser, Message } from '../types'
 
 interface State {
   messages: Resource<Message[]>
   users: Resource<User[]>
-  activeUsers: { socketId: string; userId: number }[]
+  activeUsers: ActiveUser[]
 }
 
 const initialState: State = {
